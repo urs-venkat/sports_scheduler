@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Player Dashboard</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body id="player-dashboard">
+    <header>
+      <h1>Welcome, <%= user.name %></h1>
+    </header>
+    <div class="container">
+      <div class="dashboard">
+        <div class="logout">
+          <a href="/logout">Logout</a>
+        </div>
+        <h2>Sessions</h2>
+        <ul>
+          <% sessions.forEach(session => { %>
+          <li>
+            Sport: <%= session.sport_name %>, Teams: <%= session.team1 %> vs <%=
+            session.team2 %>, Date: <%= session.date %>, Venue: <%=
+            session.venue %> <% if (session.creator_id !== user.id) { %>
+            <form action="/join-session" method="POST">
+              <input
+                type="hidden"
+                name="session_id"
+                value="<%= session.id %>"
+              />
+              <button type="submit">Join</button>
+            </form>
+            <% } else { %> (Created by you) <% } %>
+          </li>
+          <% }) %>
+        </ul>
+        <h2>Create Session</h2>
+        <form action="/create-session" method="POST">
+          <label for="sport_id">Sport:</label>
+          <select name="sport_id" id="sport_id">
+            <% sports.forEach(sport => { %>
+            <option value="<%= sport.id %>"><%= sport.name %></option>
+            <% }) %>
+          </select>
+          <label for="team1">Team 1:</label>
+          <input type="text" name="team1" id="team1" required />
+          <label for="team2">Team 2:</label>
+          <input type="text" name="team2" id="team2" required />
+          <label for="additional_players">Additional Players:</label>
+          <input
+            type="number"
+            name="additional_players"
+            id="additional_players"
+            required
+          />
+          <label for="date">Date:</label>
+          <input type="datetime-local" name="date" id="date" required />
+          <label for="venue">Venue:</label>
+          <input type="text" name="venue" id="venue" required />
+          <button type="submit">Create Session</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

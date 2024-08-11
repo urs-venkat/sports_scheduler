@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body id="admin-dashboard">
+    <header>
+      <h1>Welcome, <%= user.name %></h1>
+    </header>
+    <div class="container dashboard">
+      <section class="content">
+        <div>
+          <h2>Sports</h2>
+          <ul>
+            <% sports.forEach(sport => { %>
+            <li><%= sport.name %></li>
+            <% }) %>
+          </ul>
+          <h2>Create Sport</h2>
+          <form action="/create-sport" method="POST">
+            <label for="name">Sport Name:</label>
+            <input type="text" name="name" id="name" required />
+            <button type="submit">Create Sport</button>
+          </form>
+        </div>
+        <div>
+          <h2>All Sessions</h2>
+          <ul>
+            <% sessions.forEach(session => { %>
+            <li>
+              Sport: <%= session.sport_name %>, Teams: <%= session.team1 %> vs
+              <%= session.team2 %>, Date: <%= session.date %>, Venue: <%=
+              session.venue %>
+              <br />Created by: <%= session.creator_name %>
+            </li>
+            <% }) %>
+          </ul>
+        </div>
+      </section>
+      <a href="/logout" class="logout">Logout</a>
+      <a href="/reports" class="report-link">View Reports</a>
+      
+    </div>
+  </body>
+</html>
